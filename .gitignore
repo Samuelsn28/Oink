@@ -1,0 +1,13 @@
+
+.env
+.env.backup
+.env.production
+
+/.idea
+/.vscode
+/.codex
+/.cursor/
+/.nova
+
+app/.venv
+app/oink/__pycache__

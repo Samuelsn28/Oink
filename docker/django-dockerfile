@@ -1,0 +1,14 @@
+FROM python:3.12.15-slim-bookworm
+
+RUN apt-get update \
+    && apt-get install -y gcc default-libmysqlclient-dev pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /var/www/
+
+COPY requirements.txt .
+
+RUN python -m venv .venv \
+    && .venv/bin/pip install --no-cache-dir -r requirements.txt
+
+ENV PATH="/var/www/.venv/bin:$PATH"
