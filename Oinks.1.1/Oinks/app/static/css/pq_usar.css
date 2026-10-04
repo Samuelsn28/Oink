@@ -1,0 +1,407 @@
+/* Variáveis de cor, pra facilitar a vida de quem mais for mexer no css */
+
+:root {
+    --fundo: #080820;
+    --lateral: #11112b;
+    --card: #1a1542;
+    --painel: #231e5c;
+    --linha: #4a46d6;
+    --linha-lateral: #26225f;
+    --titulo: #4f46e5;
+    --roxo: #5b14f0;
+    --texto: #ffffff;
+    --cinza: #c8d0dc;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Lexend", system-ui, sans-serif;
+    background: var(--fundo);
+    color: var(--texto);
+    min-height: 100vh;
+
+    display: grid;
+    grid-template-columns: 220px 1fr;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+
+.sidebar {
+    background: var(--lateral);
+    border-right: 6px solid var(--linha-lateral);
+
+    padding: 20px 14px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+
+    position: sticky;
+    top: 0;
+    height: 100vh;
+
+    overflow-y: auto;
+}
+
+
+
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    width: 100%;
+    padding-bottom: 14px;
+
+    border-bottom: 4px solid var(--linha);
+}
+
+.logo-icone {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+}
+
+.logo-escrita {
+    height: 34px;
+    width: auto;
+}
+
+
+/* Menu */
+
+.sidebar nav {
+    width: 100%;
+}
+
+.sidebar ul {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+}
+
+.sidebar li a {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding-bottom: 10px;
+    border-bottom: 4px solid var(--linha-lateral);
+
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+/* Linha roxa que cresce do centro pros lados, vulgo animação foda que aprendi a fazer */
+.sidebar li a::after {
+    content: "";
+
+    position: absolute;
+    left: 50%;
+    bottom: -4px;
+
+    width: 0;
+    height: 4px;
+
+    background: var(--roxo);
+    transform: translateX(-50%);
+
+    transition: width 0.3s ease;
+}
+
+.sidebar li a:hover {
+    color: var(--texto);
+    transform: translateY(-3px);
+}
+
+.sidebar li a:hover::after {
+    width: 100%;
+}
+
+.sidebar li a:active {
+    transform: translateY(0) scale(0.97);
+}
+
+.sidebar li a:focus-visible {
+    outline: 2px solid var(--roxo);
+    outline-offset: 6px;
+    border-radius: 4px;
+}
+
+
+/* Ícones */
+
+.icone {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.icone:empty {
+    display: none;
+}
+
+
+/* O que tem na página, vulgo o conteúdo */
+
+.conteudo {
+    padding: 32px 40px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    min-width: 0;
+}
+
+
+/* Apresentação */
+
+.sobre-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+
+    padding: 32px 40px;
+
+    background: var(--painel);
+    border: 3px solid var(--linha);
+    border-radius: 18px;
+}
+
+.sobre-texto h1 {
+    font-size: 2.4rem;
+    font-weight: 500;
+    color: var(--titulo);
+}
+
+.sobre-texto p {
+    margin-top: 14px;
+    max-width: 520px;
+
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.sobre-texto .piada {
+    color: var(--cinza);
+    font-size: 0.95rem;
+}
+
+
+/* Mascote flutuando */
+
+.sobre-mascote {
+    width: 220px;
+    flex-shrink: 0;
+
+    animation: flutuar 3s ease-in-out infinite;
+}
+
+.sobre-mascote img {
+    width: 100%;
+    display: block;
+}
+
+@keyframes flutuar {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-12px); }
+}
+
+
+/* Título da seção */
+
+.sobre-titulo {
+    margin-bottom: 20px;
+
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--titulo);
+}
+
+
+/* Grid dos motivos */
+
+.sobre-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 28px;
+}
+
+.sobre-card {
+    background: var(--card);
+    border: 3px solid var(--linha);
+    border-radius: 18px;
+
+    padding: 22px 20px;
+
+    /* começa invisível e entra de baixo pra cima, peguei essa ideia do site antigo do robson*/
+    opacity: 0;
+    animation: entrar 0.6s ease forwards;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.sobre-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--roxo);
+}
+
+.sobre-card h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--titulo);
+}
+
+.sobre-card p {
+    margin-top: 10px;
+
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--cinza);
+}
+
+/* Cada card entra um pouquinho depois do anterior, para dar mais estilo */
+.sobre-card:nth-child(1) { animation-delay: 0.1s; }
+.sobre-card:nth-child(2) { animation-delay: 0.25s; }
+.sobre-card:nth-child(3) { animation-delay: 0.4s; }
+.sobre-card:nth-child(4) { animation-delay: 0.55s; }
+.sobre-card:nth-child(5) { animation-delay: 0.7s; }
+.sobre-card:nth-child(6) { animation-delay: 0.85s; }
+
+@keyframes entrar {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Numerinho dos motivos */
+
+.motivo-numero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    margin-bottom: 12px;
+
+    border-radius: 50%;
+    background: var(--roxo);
+
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+
+/* O oink(ai eu amo esse mascote) */
+
+.ajuda {
+    background: var(--painel);
+    border: 3px solid var(--linha);
+    border-radius: 18px;
+
+    width: min(780px, 100%);
+    margin: 0 auto;
+
+    padding: 28px 24px;
+
+    text-align: center;
+}
+
+.ajuda h2 {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--titulo);
+}
+
+.ajuda p {
+    margin-top: 12px;
+
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.acao {
+    margin-top: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
+.botao {
+    background: var(--roxo);
+    border: 3px solid var(--linha);
+    border-radius: 14px;
+
+    padding: 14px 70px;
+
+    font-size: 1.5rem;
+    font-weight: 500;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.botao:hover {
+    transform: translateY(-3px);
+    background: #6d2cf5;
+}
+
+
+
+
+/* Respeita quem prefere menos movimento, mas acho que não ta funcionando */
+@media (prefers-reduced-motion: reduce) {
+    .sobre-mascote,
+    .sobre-card {
+        animation: none;
+        opacity: 1;
+    }
+}
+
+/* Celular */
+@media (max-width: 800px) {
+    .sobre-hero {
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+}

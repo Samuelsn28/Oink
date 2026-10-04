@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img"><title>Oink</title><circle cx="100" cy="38" r="16" fill="#fbbf24" stroke="#f59e0b" stroke-width="3"/>
+<circle cx="100" cy="38" r="9.5" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+<path d="M40 92 Q22 34 82 48 Q100 58 98 84 Z" fill="#7c3aed"/><path d="M160 92 Q178 34 118 48 Q100 58 102 84 Z" fill="#7c3aed"/>
+<path d="M47 82 Q38 56 72 62 Q82 68 82 82 Z" fill="#a78bfa"/><path d="M153 82 Q162 56 128 62 Q118 68 118 82 Z" fill="#a78bfa"/>
+<ellipse cx="100" cy="112" rx="74" ry="66" fill="#8b5cf6"/>
+<rect x="80" y="44" width="40" height="7" rx="3.5" fill="#3b0764"/>
+<ellipse cx="46" cy="130" rx="13" ry="8" fill="#3b82f6" opacity="0.55"/>
+<ellipse cx="154" cy="130" rx="13" ry="8" fill="#3b82f6" opacity="0.55"/>
+<circle cx="70" cy="104" r="8" fill="#0a0a1f"/><circle cx="73" cy="101" r="3" fill="#fff"/>
+<circle cx="130" cy="104" r="8" fill="#0a0a1f"/><circle cx="133" cy="101" r="3" fill="#fff"/>
+<ellipse cx="100" cy="132" rx="30" ry="21" fill="#a78bfa"/>
+<ellipse cx="91" cy="131" rx="4.5" ry="6.5" fill="#4c1d95"/><ellipse cx="109" cy="131" rx="4.5" ry="6.5" fill="#4c1d95"/>
+<path d="M89 158 Q100 166 111 158" fill="none" stroke="#3b0764" stroke-width="3" stroke-linecap="round"/></svg>

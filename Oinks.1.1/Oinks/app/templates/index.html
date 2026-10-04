@@ -1,0 +1,245 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Oink | Dashboard</title>
+
+    <!-- A fonte do site -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+
+    
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+
+<body>
+
+ <!-- A barra lateral do site, com o logo e o menu de navegação, que vai ser fixo na tela, para o usuário poder acessar a qualquer momento -->
+    <aside class="sidebar">
+
+        <a class="logo" href="#">
+            <img
+                class="logo-icone"
+                src="{% static 'img/oink-logo/oink-logo.png' %}"
+                alt="Logo do Oink"
+            >
+
+            <img
+                class="logo-escrita"
+                src="{% static 'img/oink-escrita/oink-escrita-roxo.png' %}"
+                alt="Oink"
+            >
+        </a>
+
+          <nav aria-label="Menu principal">
+            <ul>
+                <li><a href="#"><span class="icone" aria-hidden="true"></span>Converse com o Oink</a></li>
+                <li><a href="#"><span class="icone" aria-hidden="true"></span>Configurações</a></li>
+                <li><a href="#"><span class="icone" aria-hidden="true"></span>Minha conta</a></li>
+                <li><a href="#"><span class="icone" aria-hidden="true"></span>Sobre nós</a></li>
+                <li><a href="{% url 'pq_usar' %}"><span class="icone" aria-hidden="true"></span>Pq usar o Oink?</a></li>
+                <li><a href="#"><span class="icone" aria-hidden="true"></span>Termos de uso</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+
+<!-- As coisas principais do site, o que o usuário vai ver primeiro, o que ele vai interagir,, mas primeiroo, ele so vai poder usar o site se tiber logadooo -->
+    <main class="conteudo">
+
+<!-- Topo, o matheus que sabe fazer essas macumbas com o django, para colocar foto e o nome do user -->
+        <header class="topo">
+
+            <section class="saudacao">
+                <h1>Olá, (Usuário)</h1>
+
+                <p>
+                    Veja como estão suas finanças hoje
+                </p>
+            </section>
+
+            <figure class="avatar">
+                
+                <img
+                    src="{% static 'img/oink-logo/icone-user-sem-foto.png' %}"
+                    alt="Foto de perfil"
+                >
+            </figure>
+
+        </header>
+
+
+   <!-- Seu resumo que descobrimos, se der errado é culpa do pedro -->
+        <section
+            class="resumo"
+            aria-label="Resumo financeiro"
+        >
+
+            <article class="card">
+
+                <h2>Saldo</h2>
+
+                <p class="valor">
+                    
+                </p>
+
+            </article>
+
+
+            <article class="card">
+
+                <h2>Entrada</h2>
+
+                <p class="valor">
+                    
+                </p>
+
+            </article>
+
+
+            <article class="card">
+
+                <h2>Gastos</h2>
+
+                <p class="valor gasto">
+                    
+                </p>
+
+            </article>
+
+        </section>
+
+
+        <!-- O grafico de gastos my niggas -->
+        <section
+            class="grafico"
+            aria-label="Gráfico de gastos"
+        >
+
+            <h2>Gráficos de gastos</h2>
+
+           
+
+        </section>
+
+
+         <!-- Botão de ajuda com a IA my niggas -->
+        <section
+            class="ajuda"
+            aria-label="Chat com a IA"
+        >
+
+            <h2>
+                Precisa de ajuda?
+            </h2>
+
+            <p>
+                Acesse a sua IA financeira, o Oink IA,
+                seu dinheiro está em boas patas.
+            </p>
+
+            <p class="piada">
+                Ou cascos.
+            </p>
+
+            <section class="acao">
+
+                <a
+                    class="botao"
+                    href="#"
+                >
+                    Oink
+                </a>
+
+                <figure class="mascote">
+
+                    <img
+                        src="{% static 'img/oink-gifs/oink-acenando.gif' %}"
+                        alt="Oink acenando"
+                    >
+
+                </figure>
+
+            </section>
+
+        </section>
+
+
+     <!-- A bolsa de valores my niggas -->
+      <footer class="bolsa" aria-label="Bolsa de valores">
+
+    <div class="bolsa-cabecalho">
+        <div>
+            <h2>Bolsa de valores</h2>
+            <p>Acompanhe o mercado financeiro</p>
+        </div>
+    </div>
+
+    <div class="tradingview-wrapper">
+
+        <!-- TradingView Widget -->
+        <div class="tradingview-widget-container">
+
+            <div class="tradingview-widget-container__widget"></div>
+
+            <script
+                type="text/javascript"
+                src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js"
+                async>
+                {
+                    "symbols": [
+                        {
+                            "proName": "BMFBOVESPA:IBOV",
+                            "title": "Ibovespa"
+                        },
+                        {
+                            "proName": "FX_IDC:USDBRL",
+                            "title": "Dólar"
+                        },
+                        {
+                            "proName": "FX_IDC:EURBRL",
+                            "title": "Euro"
+                        },
+                        {
+                            "proName": "BMFBOVESPA:PETR4",
+                            "title": "Petrobras"
+                        },
+                        {
+                            "proName": "BMFBOVESPA:VALE3",
+                            "title": "Vale"
+                        },
+                        {
+                            "proName": "BINANCE:BTCUSD",
+                            "title": "Bitcoin"
+                        }
+                    ],
+
+                    "colorTheme": "dark",
+
+                    "locale": "br",
+
+                    "largeChartUrl": "",
+
+                    "isTransparent": true,
+
+                    "showSymbolLogo": true,
+
+                    "displayMode": "adaptive"
+                }
+            </script>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+    </main>
+
+</body>
+</html>
