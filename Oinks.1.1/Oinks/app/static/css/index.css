@@ -1,0 +1,506 @@
+/* Eu to separando por variaveis de cores, pra facilitar a vida de quem mais for mexer no css */
+
+:root {
+    --fundo: #080820;
+    --lateral: #11112b;
+    --card: #1a1542;
+    --painel: #231e5c;
+    --linha: #4a46d6;
+    --linha-lateral: #26225f;
+    --titulo: #4f46e5;
+    --roxo: #5b14f0;
+    --texto: #ffffff;
+    --vermelho: #ff3333;
+    --cinza: #c8d0dc;
+    --barra: #4a46d6;
+}
+
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* O corpo */
+body {
+    font-family: "Lexend", system-ui, sans-serif;
+
+    background: var(--fundo);
+
+    color: var(--texto);
+
+    min-height: 100vh;
+
+    display: grid;
+
+    grid-template-columns: 220px 1fr;
+}
+
+
+/* Os elementos gerais */
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+/* A barra do lado */
+
+.sidebar {
+    background: var(--lateral);
+
+    border-right: 6px solid var(--linha-lateral);
+
+    padding: 20px 14px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 48px;
+
+    position: sticky;
+
+    top: 0;
+
+    height: 100vh;
+}
+
+
+/* Logo */
+
+.logo {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 8px;
+
+    width: 100%;
+
+    padding-bottom: 14px;
+
+    border-bottom: 4px solid var(--linha);
+}
+
+.logo-icone {
+    width: 90px;
+    height: 90px;
+
+    object-fit: contain;
+}
+
+.logo-escrita {
+    height: 34px;
+
+    width: auto;
+}
+
+
+/* Menu, fiz uma animação basica so para ver como fica */
+
+
+
+.sidebar nav {
+    width: 100%;
+}
+
+.sidebar ul {
+    display: flex;
+    flex-direction: column;
+
+   
+    gap: 56px;
+}
+
+.sidebar li a {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding-bottom: 10px;
+
+
+    border-bottom: 4px solid var(--linha-lateral);
+
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.sidebar li a::after {
+    content: "";
+
+    position: absolute;
+    left: 50%;
+    bottom: -4px;
+
+    width: 0;
+    height: 4px;
+
+    background: var(--roxo);
+
+    transform: translateX(-50%);
+
+    transition: width 0.3s ease;
+}
+
+.sidebar li a:hover {
+    color: var(--texto);
+
+    
+    transform: translateY(-3px);
+}
+
+.sidebar li a:hover::after {
+    width: 100%;
+}
+
+.sidebar li a:active {
+    transform: translateY(0) scale(0.97);
+}
+
+
+.sidebar li a:focus-visible {
+    outline: 2px solid var(--roxo);
+    outline-offset: 6px;
+    border-radius: 4px;
+}
+
+/* Ícones */
+
+.icone {
+    width: 20px;
+
+    height: 20px;
+
+    flex-shrink: 0;
+}
+
+.icone:empty {
+    display: none;
+}
+
+
+/* Conteudo da página */
+
+.conteudo {
+    padding: 32px 40px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 40px;
+
+    min-width: 0;
+}
+
+
+/* =========================================
+   TOPO
+========================================= */
+
+.topo {
+    display: flex;
+
+    align-items: center;
+
+    gap: 40px;
+}
+
+.saudacao h1 {
+    font-size: 2.4rem;
+
+    font-weight: 500;
+
+    color: var(--titulo);
+}
+
+.saudacao p {
+    margin-top: 10px;
+
+    font-size: 1.3rem;
+
+    font-weight: 500;
+}
+
+
+/* Avatar */
+
+.avatar {
+    width: 110px;
+
+    height: 110px;
+
+    border-radius: 50%;
+
+    border: 4px solid var(--linha);
+
+    background: var(--card);
+
+    overflow: hidden;
+
+    flex-shrink: 0;
+}
+
+.avatar img {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+/* Os cards */
+
+.card,
+.grafico,
+.ajuda,
+.bolsa {
+    background: var(--card);
+
+    border: 3px solid var(--linha);
+
+    border-radius: 18px;
+}
+
+
+/* Resumo */
+
+.resumo {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 80px;
+}
+
+
+/* Card */
+
+.card {
+    padding: 14px 20px 18px;
+}
+
+.card h2 {
+    font-size: 1.4rem;
+
+    font-weight: 500;
+
+    color: var(--titulo);
+}
+
+
+/* Valores */
+
+.valor {
+    margin-top: 18px;
+
+    font-size: 1.8rem;
+
+    font-weight: 500;
+}
+
+.valor.gasto {
+    color: var(--vermelho);
+}
+
+
+/* O grafico, eu acabei fazendo  esse aqui como um texto so para saber se ficava bonito a minha idea */
+.grafico {
+    padding: 16px 28px 24px;
+}
+
+.grafico h2 {
+    font-size: 1.6rem;
+
+    font-weight: 500;
+
+    color: var(--titulo);
+}
+
+
+/* O botão de ajuda do nosso lindo oink */
+
+.ajuda {
+    background: var(--painel);
+
+    width: min(780px, 100%);
+
+    margin: 0 auto;
+
+    padding: 28px 24px;
+
+    text-align: center;
+}
+
+.ajuda h2 {
+    font-size: 1.8rem;
+
+    font-weight: 500;
+
+    color: var(--titulo);
+}
+
+.ajuda p {
+    margin-top: 12px;
+
+    font-size: 1rem;
+
+    font-weight: 500;
+}
+
+.ajuda .piada {
+    font-size: 0.95rem;
+}
+
+
+/* Área do botão */
+
+.acao {
+    margin-top: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 24px;
+}
+
+
+/* Botão */
+
+.botao {
+    background: var(--roxo);
+
+    border: 3px solid var(--linha);
+
+    border-radius: 14px;
+
+    padding: 14px 70px;
+
+    font-size: 1.5rem;
+
+    font-weight: 500;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.botao:hover {
+    transform: translateY(-3px);
+
+    background: #6d2cf5;
+}
+
+
+/* Mascote */
+
+.mascote {
+    width: 130px;
+
+    flex-shrink: 0;
+}
+
+.mascote img {
+    width: 100%;
+
+    display: block;
+}
+
+.mascote:empty {
+    display: none;
+}
+
+
+/* A bolsa de valores */
+.bolsa {
+    background: var(--painel);
+
+    padding: 22px 28px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+    width: 100%;
+
+    overflow: hidden;
+}
+
+.bolsa-cabecalho {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.bolsa-cabecalho h2 {
+    font-size: 1.6rem;
+
+    font-weight: 500;
+
+    color: var(--titulo);
+}
+
+.bolsa-cabecalho p {
+    margin-top: 6px;
+
+    color: var(--cinza);
+
+    font-size: 0.9rem;
+}
+
+
+.tradingview-wrapper {
+    width: 100%;
+
+    min-height: 60px;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+
+    background: #0f0d1c;
+}
+
+.tradingview-widget-container {
+    width: 100%;
+
+    min-height: 60px;
+}
+
+.tradingview-widget-container__widget {
+    width: 100%;
+}
