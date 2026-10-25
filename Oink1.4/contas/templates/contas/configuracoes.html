@@ -1,0 +1,44 @@
+{% load static %}<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oink | Configurações</title>
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/extra.css' %}">
+</head>
+<body>
+{% include "_sidebar.html" with ativo="config" %}
+    <main class="conteudo">
+        <header class="topo"><section class="saudacao"><h1>Configurações</h1><p>Deixe o Oink do seu jeito</p></section></header>
+        {% if messages %}<ul class="mensagens">{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>{% endif %}
+
+        <section class="grafico" aria-label="Preferências do Oink">
+            <h2>Preferências do Oink</h2>
+            <form method="post" class="form">{% csrf_token %}
+                <label class="campo">{{ form.meta_gastos.label }}{{ form.meta_gastos }}<span class="ajuda-campo">Aparece no painel com a % já usada, e o Oink avisa se passar.</span>{% for e in form.meta_gastos.errors %}<span class="erro">{{ e }}</span>{% endfor %}</label>
+                <label class="campo">{{ form.tom_oink.label }}{{ form.tom_oink }}</label>
+                <label class="aceite"><input type="checkbox" name="usar_dados_no_oink" {% if form.usar_dados_no_oink.value %}checked{% endif %}><span><b>{{ form.usar_dados_no_oink.label }}</b><br>Desmarque se não quiser que a IA veja seus totais do mês.</span></label>
+                <button class="botao" type="submit">Salvar preferências</button>
+            </form>
+        </section>
+
+        <section class="grafico" aria-label="Segurança">
+            <h2>Segurança</h2>
+            <p class="legenda">Senha: <a class="link-sub" href="{% url 'alterar_senha' %}">alterar senha</a></p>
+            <p class="legenda">Se você esquecer a senha, enviamos um link para <b>{{ email_mascarado }}</b>. Para trocar esse e-mail, vá em <a class="link-sub" href="{% url 'perfil' %}">Minha conta</a>.</p>
+            <p class="legenda">Termos de uso aceitos em {{ perfil.aceitou_termos_em|date:"d/m/Y"|default:"—" }} (versão {{ perfil.versao_termos|default:"—" }}). <a class="link-sub" href="{% url 'termos' %}">Ler os termos</a></p>
+        </section>
+
+        <section class="grafico" aria-label="Conta">
+            <h2>Conta</h2>
+            <p class="legenda"><a class="link-sub" href="{% url 'perfil' %}">Editar foto, nome e e-mail</a> · <a class="link-sub" href="{% url 'perfil' %}#apagar">Apagar minha conta</a></p>
+        </section>
+    </main>
+{% include "_dialogos.html" %}
+</body>
+</html>

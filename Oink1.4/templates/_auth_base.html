@@ -1,0 +1,31 @@
+{% load static %}<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oink | {% block titulo %}{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/extra.css' %}">
+</head>
+<body class="auth">
+<div class="auth-pagina">
+    <section class="auth-marca" aria-label="Apresentação do Oink">
+        <img class="logo-horizontal" src="{% static 'img/oink-logo/oink-horizontal-1080.png' %}" alt="Oink">
+        <img class="oink-grande" src="{% block gif %}{% static 'img/oink-gifs/oink-acenando.gif' %}{% endblock %}" alt="">
+        <h2>Seu dinheiro está em boas patas</h2>
+    </section>
+    <main class="auth-lado">
+        <div class="auth-cartao">
+            <img class="logo-horizontal-mobile" src="{% static 'img/oink-logo/oink-horizontal-1080.png' %}" alt="Oink">
+            {% if messages %}<ul class="mensagens auth-msgs">{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>{% endif %}
+            {% block miolo %}{% endblock %}
+        </div>
+    </main>
+</div>
+<script src="{% static 'javascript/conta.js' %}" defer></script>
+</body>
+</html>

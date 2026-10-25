@@ -1,0 +1,72 @@
+{% load static %}<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oink | Minha conta</title>
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/extra.css' %}">
+</head>
+<body>
+{% include "_sidebar.html" with ativo="perfil" %}
+    <main class="conteudo">
+        <header class="topo"><section class="saudacao"><h1>Minha conta</h1><p>Seus dados e sua foto de perfil</p></section></header>
+        {% if messages %}<ul class="mensagens">{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>{% endif %}
+        <section class="grafico" aria-label="Dados do perfil">
+            <form method="post" enctype="multipart/form-data" class="perfil">{% csrf_token %}
+                <div class="avatar-col">
+                    <figure class="avatar grande">
+                        {% if user.perfil.foto %}<img id="previa" src="{{ user.perfil.foto.url }}" alt="Sua foto de perfil">{% else %}<img id="previa" src="{% static 'img/oink-logo/icone-user-sem-foto.png' %}" alt="Sem foto de perfil">{% endif %}
+                    </figure>
+                    {{ form.foto }}<label class="botao sec pequeno" for="id_foto">Alterar foto</label>
+                    <p class="meta">JPG, PNG ou WEBP. Você escolhe o recorte.</p>
+                    {% for e in form.foto.errors %}<span class="erro">{{ e }}</span>{% endfor %}
+                    {% if user.perfil.foto %}<label class="campo check">{{ form.remover_foto }} {{ form.remover_foto.label }}</label>{% endif %}
+                    <p class="meta">Membro desde {{ user.date_joined|date:"d/m/Y" }}</p>
+                </div>
+                <div class="form">
+                    <label class="campo">{{ form.first_name.label }}{{ form.first_name }}{% for e in form.first_name.errors %}<span class="erro">{{ e }}</span>{% endfor %}</label>
+                    <label class="campo">{{ form.email.label }}{{ form.email }}{% for e in form.email.errors %}<span class="erro">{{ e }}</span>{% endfor %}</label>
+                    <p class="ajuda-campo">Usuário: <b>{{ user.username }}</b> · <a href="{% url 'alterar_senha' %}" style="text-decoration:underline">Alterar senha</a></p>
+                    <button class="botao" type="submit">Salvar alterações</button>
+                </div>
+            </form>
+        </section>
+        <section class="grafico perigo-zona" id="apagar" aria-label="Apagar conta">
+            <h2>Apagar conta</h2>
+            <p class="legenda">Isso apaga para sempre sua conta, suas movimentações e sua foto. Não dá para desfazer.</p>
+            <button type="button" class="botao perigo pequeno" data-abrir="dlg-apagar" style="margin-top:14px">Apagar minha conta</button>
+        </section>
+    </main>
+
+<dialog id="dlg-recorte" class="dialogo" aria-labelledby="t-recorte">
+    <h2 id="t-recorte">Recorte sua foto</h2>
+    <p>Arraste para posicionar e use o zoom.</p>
+    <canvas id="recorte-canvas" width="320" height="320" aria-label="Área de recorte da foto"></canvas>
+    <label class="zoom">Zoom <input id="recorte-zoom" type="range" min="1" max="3" step="0.01" value="1"></label>
+    <div class="dialogo-botoes">
+        <button type="button" class="botao sec" id="recorte-cancelar">Cancelar</button>
+        <button type="button" class="botao" id="recorte-ok">Usar esta foto</button>
+    </div>
+</dialog>
+
+<dialog id="dlg-apagar" class="dialogo" aria-labelledby="t-apagar">
+    <img class="dialogo-oink" data-src="{% static 'img/oink-gifs/oink-triste.gif' %}" src="{% static 'img/oink-gifs/oink-triste.gif' %}" alt="Oink triste">
+    <h2 id="t-apagar">Apagar sua conta?</h2>
+    <p>Você vai perder tudo: movimentações, histórico e foto. O Oink vai ficar muito triste.</p>
+    <form method="post" action="{% url 'apagar_conta' %}" class="form">{% csrf_token %}
+        <label class="campo">Para confirmar, digite sua senha<input type="password" name="senha" required autocomplete="current-password"></label>
+        <div class="dialogo-botoes">
+            <button type="button" class="botao sec" data-fechar>Cancelar</button>
+            <button type="submit" class="botao perigo">Apagar para sempre</button>
+        </div>
+    </form>
+</dialog>
+{% include "_dialogos.html" %}
+<script src="{% static 'javascript/perfil.js' %}" defer></script>
+</body>
+</html>

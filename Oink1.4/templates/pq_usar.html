@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Oink | Por que usar o Oink?</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{% static 'css/pq_usar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/extra.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+</head>
+
+<body>
+
+     <aside class="sidebar">
+
+        <a class="logo" href="{% url 'index' %}">
+            <img
+                class="logo-icone"
+                src="{% static 'img/oink-logo/oink-logo.png' %}"
+                alt="Logo do Oink"
+            >
+
+            <img
+                class="logo-escrita"
+                src="{% static 'img/oink-escrita/oink-escrita-roxo.png' %}"
+                alt="Oink"
+            >
+        </a>
+
+        <nav aria-label="Menu principal">
+            <ul>
+                <li><a href="{% url 'chat' %}"><span class="icone" aria-hidden="true"></span>Converse com o Oink</a></li>
+                <li><a href="{% url 'configuracoes' %}"><span class="icone" aria-hidden="true"></span>Configurações</a></li>
+                <li><a href="{% url 'perfil' %}"><span class="icone" aria-hidden="true"></span>Minha conta</a></li>
+                <li><a href="{% url 'sobre' %}"><span class="icone" aria-hidden="true"></span>Sobre nós</a></li>
+                <li><a href="{% url 'pq_usar' %}"><span class="icone" aria-hidden="true"></span>Pq usar o Oink?</a></li>
+                <li><a href="{% url 'termos' %}"><span class="icone" aria-hidden="true"></span>Termos de uso</a></li>
+            {% if user.is_staff %}<li><a href="{% url 'adm_oink' %}"><span class="icone" aria-hidden="true"></span>Admin Oink</a></li>{% endif %}
+                {% if user.is_authenticated %}
+                <li><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit" class="sair" data-sair data-sair><span class="icone" aria-hidden="true"></span>Sair</button></form></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </aside>
+
+
+
+    <main class="conteudo">
+
+      
+        <section class="sobre-hero">
+
+            <div class="sobre-texto">
+                <h1>Por que usar o Oink?</h1>
+
+                <p>
+                    Controlar dinheiro costuma ser chato, confuso e fácil de
+                    deixar pra depois. O Oink existe pra deixar isso simples,
+                    e até um pouco divertido.
+                </p>
+
+                <p class="piada">Cuidar do seu bolso não precisa dar dor de cabeça.</p>
+                <h2>Confie em nós, o seu dinheiro está em boas patas (ou cascos)</h2>
+            </div>
+
+            <figure class="sobre-mascote">
+                <img
+                    src="{% static 'img/oink-gifs_variações/oink-descolado.gif' %}"
+                    alt="Oink descolado e radical"
+                >
+            </figure>
+
+        </section>
+
+
+        <section aria-label="Motivos para usar o Oink">
+
+            <h2 class="sobre-titulo">6 motivos pra confiar no Oink</h2>
+
+            <div class="sobre-grid">
+
+                <article class="sobre-card">
+                    <span class="motivo-numero">1</span>
+                    <h3>Você entende seus gastos</h3>
+                    <p>O Oink analisa suas entradas e saídas e mostra, sem enrolação, pra onde o dinheiro está indo.</p>
+                </article>
+
+                <article class="sobre-card">
+                    <span class="motivo-numero">2</span>
+                    <h3>Encontra o que é desnecessário</h3>
+                    <p>Aquelas assinaturas e gastinhos que passam batido? O Oink aponta pra você.</p>
+                </article>
+
+                <article class="sobre-card">
+                    <span class="motivo-numero">3</span>
+                    <h3>Ajuda a investir o que sobra</h3>
+                    <p>Sobrou dinheiro no mês? Ele ajuda você a pensar em como fazer esse valor render.</p>
+                </article>
+
+                <article class="sobre-card">
+                    <span class="motivo-numero">4</span>
+                    <h3>Ensina de um jeito simples</h3>
+                    <p>Educação financeira em linguagem do dia a dia, sem aquele financês complicado.</p>
+                </article>
+
+                <article class="sobre-card">
+                    <span class="motivo-numero">5</span>
+                    <h3>Tudo num lugar só</h3>
+                    <p>Resumo das finanças, gráficos, bolsa de valores e chat com a IA na mesma tela.</p>
+                </article>
+
+                <article class="sobre-card">
+                    <span class="motivo-numero">6</span>
+                    <h3>Dá pra tirar dúvida na hora</h3>
+                    <p>Ficou na dúvida sobre algo? É só perguntar pro Oink, a qualquer momento.</p>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <section class="ajuda" aria-label="Converse com o Oink">
+
+            <h2>Bora começar?</h2>
+
+            <p>Converse com o Oink e veja como suas finanças podem ficar mais leves.</p>
+
+            <section class="acao">
+                <a class="botao" href="{% url 'chat' %}">Falar com o Oink</a>
+            </section>
+
+        </section>
+
+    </main>
+
+{% include "_dialogos.html" %}
+</body>
+</html>

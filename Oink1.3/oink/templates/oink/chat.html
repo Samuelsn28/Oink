@@ -1,0 +1,102 @@
+{% load static %}<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oink | Converse com o Oink</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/extra.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+</head>
+<body>
+<meta name="csrf-token" content="{{ csrf_token }}">
+{% include "_sidebar.html" with ativo="chat" %}
+    <main class="conteudo">
+        <header class="topo"><section class="saudacao"><h1>Converse com o Oink</h1><p>Tire dúvidas e analise suas finanças</p></section></header>
+        <section class="chat" aria-label="Chat com o Oink">
+            <div class="chat-topo">
+                <!-- Slot da sua animação do Oink: o JS troca data-estado (parado, pensando, falando, bloqueado) -->
+                <figure class="chat-oink slot-animacao" id="oink-chat" data-animacao="chat-oink" data-estado="parado" aria-label="Oink">
+                    <img src="{% static 'img/oink-gifs/oink-acenando.gif' %}" alt="Oink">
+                </figure>
+                <h2>Oink IA</h2>
+                <button class="chat-novo" id="novo" type="button">Nova conversa</button>
+            </div>
+            <div class="chat-msgs" id="msgs" aria-live="polite" aria-label="Conversa"></div>
+            <div class="sugestoes" id="sugestoes">
+                <button type="button">Como começo a controlar meus gastos?</button>
+                <button type="button">Analise meus gastos deste mês</button>
+                <button type="button">O que é reserva de emergência?</button>
+            </div>
+            <form class="chat-form" id="form" autocomplete="off">
+                <textarea id="entrada" rows="1" maxlength="1000" placeholder="Pergunte algo ao Oink" aria-label="Sua mensagem"></textarea>
+                <button class="botao" id="botao" type="submit">Enviar</button>
+            </form>
+            <p class="chat-aviso">Não envie CPF, senhas ou dados de cartão. As dicas do Oink são educativas.</p>
+        </section>
+    </main>
+<script>
+const $ = (id) => document.getElementById(id);
+const msgs = $("msgs"), entrada = $("entrada"), botao = $("botao"), form = $("form"), oink = $("oink-chat");
+const csrf = document.querySelector('meta[name="csrf-token"]').content;
+let ocupado = false;
+const GIFS = {
+  parado: "{% static 'img/oink-gifs/oink-feliz.gif' %}", acenando: "{% static 'img/oink-gifs/oink-acenando.gif' %}", pensando: "{% static 'img/oink-gifs/oink-pensando.gif' %}",
+  falando: "{% static 'img/oink-gifs/oink-ideia.gif' %}", bloqueado: "{% static 'img/oink-gifs/oink-surpreso.gif' %}", erro: "{% static 'img/oink-gifs/oink-preocupado.gif' %}", dormindo: "{% static 'img/oink-gifs/oink-dormindo.gif' %}"
+};
+Object.values(GIFS).forEach((u) => { new Image().src = u; });      // carrega antes, sem piscar
+const figura = oink.querySelector("img");
+const estado = (e) => { oink.dataset.estado = e; figura.src = GIFS[e] || GIFS.parado; };
+let sono;
+function acordar() {                                                 // 45 s sem mexer: o Oink dorme
+  if (oink.dataset.estado === "dormindo") estado("parado");
+  clearTimeout(sono); sono = setTimeout(() => { if (!ocupado) estado("dormindo"); }, 45000);
+}
+["keydown", "pointerdown"].forEach((ev) => document.addEventListener(ev, acordar));
+
+function adicionar(quem, texto, extra = "") {
+  const d = document.createElement("div");
+  d.className = "msg " + quem + " " + extra;
+  d.textContent = texto;                               // textContent: nada vira HTML
+  msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight; return d;
+}
+function boasVindas() {
+  msgs.innerHTML = "";
+  adicionar("oink", "Oink! Eu sou o Oink. Posso analisar seus ganhos e gastos, apontar o que dá pra cortar e explicar como o dinheiro que sobra pode render. Por onde começamos?");
+  $("sugestoes").hidden = false; estado("acenando"); setTimeout(() => { if (!ocupado && oink.dataset.estado === "acenando") estado("parado"); }, 3500);
+}
+async function enviar(texto) {
+  if (ocupado || !texto.trim()) return;
+  ocupado = true; botao.disabled = true; $("sugestoes").hidden = true;
+  const minha = adicionar("eu", texto); entrada.value = ""; ajustar();
+  const espera = adicionar("oink", "…", "digitando"); estado("pensando");
+  let final = "parado";
+  try {
+    const r = await fetch("/api/oink/", { method: "POST",
+      headers: { "Content-Type": "application/json", "X-CSRFToken": csrf }, body: JSON.stringify({ mensagem: texto }) });
+    const d = await r.json().catch(() => ({}));
+    espera.remove();
+    if (d.bloqueado) { minha.remove(); adicionar("oink", d.resposta, "bloq"); final = "bloqueado"; }
+    else if (r.ok) { adicionar("oink", d.resposta); final = "falando"; }
+    else { adicionar("oink", d.erro || "Oink... algo deu errado.", "erro"); final = "erro"; }
+  } catch (e) {
+    espera.remove(); adicionar("oink", "Oink... não consegui me conectar. Tente de novo.", "erro"); final = "erro";
+  } finally { estado(final); ocupado = false; botao.disabled = false; entrada.focus(); acordar(); }
+}
+function ajustar() { entrada.style.height = "auto"; entrada.style.height = Math.min(entrada.scrollHeight, 140) + "px"; }
+form.addEventListener("submit", (e) => { e.preventDefault(); enviar(entrada.value); });
+entrada.addEventListener("input", ajustar);
+entrada.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); } });
+$("sugestoes").addEventListener("click", (e) => { if (e.target.tagName === "BUTTON") enviar(e.target.textContent); });
+$("novo").addEventListener("click", async () => {
+  await fetch("/api/oink/limpar/", { method: "POST", headers: { "X-CSRFToken": csrf } }); boasVindas(); entrada.focus();
+});
+fetch("/api/oink/limpar/", { method: "POST", headers: { "X-CSRFToken": csrf } });
+boasVindas();
+</script>
+{% include "_dialogos.html" %}
+</body>
+</html>

@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Oink | Termos de uso</title>
+
+    <!-- A fonte do site -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/termos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/extra.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+</head>
+
+<body>
+
+    <!-- A barra lateral, igual a da página inicial -->
+    <aside class="sidebar">
+
+        <a class="logo" href="{% url 'index' %}">
+            <img
+                class="logo-icone"
+                src="{% static 'img/oink-logo/oink-logo.png' %}"
+                alt="Logo do Oink"
+            >
+
+            <img
+                class="logo-escrita"
+                src="{% static 'img/oink-escrita/oink-escrita-roxo.png' %}"
+                alt="Oink"
+            >
+        </a>
+
+        <nav aria-label="Menu principal">
+            <ul>
+                <li><a href="{% url 'chat' %}"><span class="icone" aria-hidden="true"></span>Converse com o Oink</a></li>
+                <li><a href="{% url 'alterar_senha' %}"><span class="icone" aria-hidden="true"></span>Configurações</a></li>
+                <li><a href="{% url 'perfil' %}"><span class="icone" aria-hidden="true"></span>Minha conta</a></li>
+                <li><a href="{% url 'sobre' %}"><span class="icone" aria-hidden="true"></span>Sobre nós</a></li>
+                <li><a href="{% url 'pq_usar' %}"><span class="icone" aria-hidden="true"></span>Pq usar o Oink?</a></li>
+                <li><a class="ativo" aria-current="page" href="{% url 'termos' %}"><span class="icone" aria-hidden="true"></span>Termos de uso</a></li>
+            {% if user.is_authenticated %}
+                <li><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit" class="sair" data-sair><span class="icone" aria-hidden="true"></span>Sair</button></form></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="conteudo">
+
+        <!-- Topo -->
+        <header class="topo">
+            <section class="saudacao">
+                <h1>Termos de uso</h1>
+                <p>Última atualização: outubro de 2026</p>
+            </section>
+        </header>
+
+        <section class="termos">
+
+            <!-- Índice, fica fixo enquanto o usuário lê -->
+            <aside class="indice" aria-label="Índice dos termos">
+                <h2>Nesta página</h2>
+
+                <nav>
+                    <ol>
+                        <li><a href="#aceitacao">Aceitação</a></li>
+                        <li><a href="#servico">O serviço</a></li>
+                        <li><a href="#ia">Uso da IA</a></li>
+                        <li><a href="#dados">Dados e privacidade</a></li>
+                        <li><a href="#responsabilidades">Responsabilidades</a></li>
+                        <li><a href="#alteracoes">Alterações</a></li>
+                        <li><a href="#contato">Contato</a></li>
+                    </ol>
+                </nav>
+
+                <figure class="slot-animacao slot-icone" data-animacao="termos-indice" aria-hidden="true"><img src="{% static 'img/oink-gifs/oink-pensando_1.gif' %}" alt=""></figure>
+            </aside>
+
+            <article class="grafico texto-termos">
+
+                <figure class="slot-animacao slot-faixa" data-animacao="termos-topo" aria-label="Animação do topo"><img src="{% static 'img/oink-gifs/oink-acenando.gif' %}" alt=""></figure>
+
+                <section id="aceitacao" class="clausula" data-reveal>
+                    <h2>1. Aceitação dos termos</h2>
+                    <p>Ao acessar ou usar o Oink, você concorda com estes termos. Se não concordar, não utilize o serviço.</p>
+                </section>
+
+                <section id="servico" class="clausula" data-reveal>
+                    <h2>2. O serviço</h2>
+                    <p>O Oink é uma plataforma de educação financeira com um assistente de inteligência artificial que analisa gastos e ganhos informados por você e oferece orientações gerais.</p>
+
+                    <figure class="slot-animacao slot-faixa" data-animacao="termos-servico" aria-hidden="true"><img src="{% static 'img/oink-gifs/oink-feliz_1.gif' %}" alt=""></figure>
+                </section>
+
+                <section id="ia" class="clausula" data-reveal>
+                    <h2>3. Uso da inteligência artificial</h2>
+                    <p>As respostas do Oink têm caráter educativo e informativo. Elas não substituem a orientação de um profissional financeiro, contábil ou de investimentos. As decisões financeiras são de sua responsabilidade.</p>
+                </section>
+
+                <section id="dados" class="clausula" data-reveal>
+                    <h2>4. Dados e privacidade</h2>
+                    <p>Coletamos apenas as informações necessárias para o funcionamento do serviço, como os dados financeiros que você inserir. Não vendemos seus dados a terceiros. Você pode solicitar a exclusão da sua conta e dos seus dados a qualquer momento.</p>
+                </section>
+
+                <section id="responsabilidades" class="clausula" data-reveal>
+                    <h2>5. Responsabilidades do usuário</h2>
+                    <ul>
+                        <li>Fornecer informações verdadeiras e atualizadas.</li>
+                        <li>Manter a confidencialidade da sua conta e senha.</li>
+                        <li>Não usar o serviço para fins ilegais ou abusivos.</li>
+                    </ul>
+                </section>
+
+                <section id="alteracoes" class="clausula" data-reveal>
+                    <h2>6. Alterações nos termos</h2>
+                    <p>Podemos atualizar estes termos a qualquer momento. Mudanças relevantes serão avisadas no site, e o uso contínuo significa concordância com a nova versão.</p>
+                </section>
+
+                <section id="contato" class="clausula" data-reveal>
+                    <h2>7. Contato</h2>
+                    <p>Dúvidas sobre estes termos? Fale com a equipe do Oink pelo e-mail de contato do projeto.</p>
+
+                    <figure class="slot-animacao slot-faixa" data-animacao="termos-fim" aria-hidden="true"><img src="{% static 'img/oink-gifs/oink-apaixonado.gif' %}" alt=""></figure>
+                </section>
+
+            </article>
+
+        </section>
+    </main>
+
+    <script src="{% static 'javascript/termos.js' %}"></script>
+{% include "_dialogos.html" %}
+</body>
+</html>

@@ -1,0 +1,28 @@
+{% load static %}<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oink | Configurações</title>
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/extra.css' %}">
+</head>
+<body>
+{% include "_sidebar.html" with ativo="config" %}
+    <main class="conteudo">
+        <header class="topo"><section class="saudacao"><h1>Configurações</h1><p>Troque sua senha com segurança</p></section></header>
+        <section class="grafico" aria-label="Alterar senha">
+            <h2>Alterar senha</h2>
+            <form method="post" class="form">{% csrf_token %}
+                {% for campo in form %}<label class="campo">{{ campo.label }}{{ campo }}{% if campo.help_text %}<span class="ajuda-campo">{{ campo.help_text|safe }}</span>{% endif %}{% for e in campo.errors %}<span class="erro">{{ e }}</span>{% endfor %}</label>{% endfor %}
+                <button class="botao" type="submit">Salvar nova senha</button>
+            </form>
+        </section>
+    </main>
+{% include "_dialogos.html" %}
+</body>
+</html>

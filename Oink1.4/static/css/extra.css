@@ -1,0 +1,220 @@
+/* Estilos novos (login, perfil, chat, formulários). Usa as variáveis do seu index.css. */
+.sidebar li button.sair{position:relative;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding-bottom:10px;background:none;border:0;border-bottom:4px solid var(--linha-lateral);color:inherit;font-family:inherit;font-size:13.6px;font-weight:500;cursor:pointer;transition:color .25s ease,transform .25s ease}
+.sidebar li button.sair:hover{transform:translateY(-3px);border-bottom-color:var(--vermelho)}
+.sidebar li button.sair:focus-visible{outline:2px solid var(--roxo);outline-offset:6px;border-radius:4px}
+.so-leitor{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+button.botao{color:var(--texto);font-family:inherit;cursor:pointer}
+.avatar a{display:block;width:100%;height:100%}
+.legenda{margin-top:6px;color:var(--cinza);font-size:.9rem}
+.vazio{margin-top:14px;color:var(--cinza)}
+/* formulários */
+.form{display:grid;gap:14px;max-width:460px;margin-top:16px}
+.form.grade{grid-template-columns:repeat(auto-fit,minmax(170px,1fr));max-width:none;align-items:end}
+.form .botao{padding:12px 28px;font-size:1.1rem}
+.campo{display:grid;gap:6px;font-size:.9rem;color:var(--cinza)}
+.campo input,.campo select{background:var(--fundo);border:2px solid var(--linha-lateral);border-radius:10px;color:var(--texto);font:inherit;padding:10px 12px}
+.campo input:focus,.campo select:focus{outline:2px solid var(--roxo);border-color:var(--roxo)}
+.campo.check{display:flex;align-items:center;gap:8px}
+.erro,.errorlist{color:var(--vermelho);font-size:.85rem;list-style:none}
+.ajuda-campo{color:var(--cinza);font-size:.8rem}
+.mensagens{list-style:none;display:grid;gap:8px}
+.mensagens li{background:var(--painel);border:2px solid var(--linha);border-radius:12px;padding:10px 16px}
+/* tabela e barras */
+.tabela{width:100%;border-collapse:collapse;margin-top:14px}
+.tabela th{text-align:left;color:var(--titulo);font-weight:500;padding:8px 6px}
+.tabela td{padding:10px 6px;border-top:2px solid var(--linha-lateral);color:var(--cinza)}
+.tabela .pos{color:#5be3a0}.tabela .neg{color:var(--vermelho)}
+.excluir{background:none;border:0;color:var(--cinza);font:inherit;cursor:pointer;text-decoration:underline}
+.excluir:hover{color:var(--vermelho)}
+.barras{list-style:none;display:grid;gap:12px;margin-top:16px}
+.barras li{display:grid;grid-template-columns:130px 1fr 120px;align-items:center;gap:12px;font-size:.9rem}
+.barra-trilho{background:var(--fundo);border-radius:999px;height:14px;overflow:hidden}
+.barra-cheia{display:block;height:100%;background:var(--roxo);border-radius:999px}
+.barra-valor{text-align:right}
+/* login e cadastro (sem barra lateral) */
+body.auth{grid-template-columns:1fr;place-items:center;padding:24px}
+.auth-cartao{background:var(--card);border:3px solid var(--linha);border-radius:18px;padding:28px;width:min(440px,100%);display:grid;gap:8px}
+.auth-cartao .logo{border:0}
+.auth-cartao h1{color:var(--titulo);font-weight:500;font-size:1.8rem;text-align:center}
+.auth-cartao p{color:var(--cinza)}
+.auth-cartao a.link{color:var(--roxo);text-decoration:underline}
+/* perfil */
+.perfil{display:grid;grid-template-columns:150px minmax(0,1fr);gap:28px;align-items:start}
+.avatar.grande{width:150px;height:150px}
+.perfil .meta{color:var(--cinza);font-size:.85rem;margin-top:10px}
+/* chat */
+.chat{background:var(--card);border:3px solid var(--linha);border-radius:18px;display:flex;flex-direction:column;min-height:520px}
+.chat-topo{display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:3px solid var(--linha-lateral)}
+.chat-topo h2{color:var(--titulo);font-weight:500;font-size:1.3rem;flex:1}
+.chat-oink{width:60px;height:60px;flex-shrink:0}
+.chat-oink img{width:100%;height:100%;object-fit:contain;display:block}
+.chat-novo{background:none;border:2px solid var(--linha);border-radius:999px;color:var(--cinza);font:inherit;padding:6px 14px;cursor:pointer}
+.chat-novo:hover{color:var(--texto);border-color:var(--roxo)}
+.chat-msgs{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;max-height:58vh}
+.msg{max-width:80%;padding:10px 14px;border-radius:16px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg.oink{background:var(--painel);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.eu{background:var(--roxo);align-self:flex-end;border-bottom-right-radius:4px}
+.msg.bloq{background:transparent;border:2px solid var(--vermelho);color:var(--vermelho)}
+.msg.erro{background:transparent;border:2px dashed var(--vermelho)}
+.sugestoes{display:flex;flex-wrap:wrap;gap:8px;padding:0 20px 12px}
+.sugestoes button{background:var(--painel);border:2px solid var(--linha);border-radius:999px;color:var(--cinza);font:inherit;font-size:.85rem;padding:6px 12px;cursor:pointer}
+.sugestoes button:hover{color:var(--texto)}
+.chat-form{display:flex;gap:10px;padding:14px 20px;border-top:3px solid var(--linha-lateral);align-items:flex-end}
+.chat-form textarea{flex:1;resize:none;max-height:140px;background:var(--fundo);border:2px solid var(--linha-lateral);border-radius:12px;color:var(--texto);font:inherit;padding:10px 12px}
+.chat-form textarea:focus{outline:2px solid var(--roxo)}
+.chat-form .botao{padding:12px 28px;font-size:1.1rem}
+.chat-form .botao:disabled{opacity:.5;cursor:not-allowed}
+.chat-aviso{padding:0 20px 14px;color:var(--cinza);font-size:.8rem}
+@media (max-width:900px){.perfil{grid-template-columns:1fr}.barras li{grid-template-columns:1fr}.barra-valor{text-align:left}}
+
+/* ===== animações (slots) ===== */
+.slot-animacao img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.slot-icone img{height:90px}.slot-faixa img{height:120px}
+.humor{display:flex;align-items:center;gap:20px;background:var(--painel);border:3px solid var(--linha);border-radius:18px;padding:12px 24px}
+.humor img{width:96px;height:auto;flex-shrink:0}
+.humor p{font-size:1.05rem;font-weight:500}
+/* ===== diálogos (sair, apagar conta, recortar foto) ===== */
+dialog.dialogo{background:var(--card);color:var(--texto);border:3px solid var(--linha);border-radius:18px;padding:26px;width:min(430px,92vw);text-align:center;margin:auto}
+dialog.dialogo::backdrop{background:#080820d9}
+.dialogo img.dialogo-oink{width:150px;height:auto;margin:0 auto}
+.dialogo h2{color:var(--titulo);font-weight:500;margin:6px 0}
+.dialogo p{color:var(--cinza);margin-top:8px}
+.dialogo .form{margin:14px auto 0;text-align:left}
+.dialogo-botoes{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+.dialogo .botao,.botao.pequeno{padding:10px 26px;font-size:1.05rem}
+.botao.sec{background:transparent;color:var(--cinza)}
+.botao.sec:hover{background:var(--painel);color:var(--texto)}
+.botao.perigo{background:var(--vermelho);border-color:var(--vermelho)}
+.botao.perigo:hover{background:#ff5555}
+.perigo-zona{border-color:var(--vermelho)}
+.perigo-zona h2{color:var(--vermelho)}
+/* ===== foto de perfil e recorte ===== */
+.arquivo-oculto{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
+.avatar-col{display:grid;gap:12px;justify-items:center}
+.avatar-col .botao{display:inline-block;cursor:pointer}
+.arquivo-oculto:focus-visible + .botao{outline:2px solid var(--roxo);outline-offset:4px}
+#recorte-canvas{width:min(320px,100%);height:auto;aspect-ratio:1;touch-action:none;cursor:grab;border-radius:12px;background:var(--fundo)}
+#recorte-canvas:active{cursor:grabbing}
+.zoom{display:flex;align-items:center;gap:10px;margin-top:14px;color:var(--cinza)}
+.zoom input{flex:1;accent-color:var(--roxo)}
+/* ===== login, cadastro e aceite dos termos ===== */
+body.auth{grid-template-columns:1fr;place-items:stretch;padding:0}
+.auth-pagina{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:100vh}
+.auth-marca{background:radial-gradient(circle at 30% 20%,var(--painel),var(--fundo) 75%);padding:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;border-right:6px solid var(--linha-lateral)}
+.auth-marca .logo-horizontal{width:min(300px,80%);height:auto}
+.auth-marca .oink-grande{width:min(240px,60%);height:auto}
+.auth-marca h2{font-size:1.5rem;font-weight:500;color:var(--texto)}
+.auth-marca ul{display:grid;gap:10px;text-align:left;color:var(--cinza)}
+.auth-marca li::before{content:"✓";color:var(--roxo);font-weight:600;margin-right:10px}
+.auth-lado{display:grid;place-items:center;padding:32px}
+.auth-cartao{width:min(440px,100%)}
+.auth-cartao .logo-horizontal-mobile{display:none}
+.auth-cartao h1{text-align:left;font-size:2rem}
+.auth-cartao .sub{color:var(--cinza);margin:-2px 0 6px}
+.auth-cartao .campo input{padding:13px 14px}
+.auth-cartao .campo input:focus{box-shadow:0 0 0 4px #5b14f033}
+.auth-cartao .botao{width:100%;text-align:center;margin-top:6px}
+.auth-troca{text-align:center;color:var(--cinza);margin-top:8px}
+.senha-wrap{position:relative;display:block}
+.senha-wrap input{width:100%;padding-right:48px}
+.senha-wrap button{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--cinza);cursor:pointer;font:inherit;font-size:.8rem;padding:6px 8px}
+.senha-wrap button:hover{color:var(--texto)}
+.aceite{display:flex;gap:10px;align-items:flex-start;background:var(--painel);border:2px solid var(--linha-lateral);border-radius:12px;padding:12px 14px;color:var(--cinza);font-size:.9rem;line-height:1.4}
+.aceite input{margin-top:3px;width:18px;height:18px;accent-color:var(--roxo);flex-shrink:0}
+.aceite a{color:var(--texto);text-decoration:underline}
+.mensagens.auth-msgs{margin-bottom:6px}
+@media (max-width:900px){.auth-pagina{grid-template-columns:1fr}.auth-marca{display:none}.auth-cartao .logo-horizontal-mobile{display:block;width:200px;margin:0 auto 10px}}
+
+/* ===== painel do admin e configurações ===== */
+.link-sub{color:var(--texto);text-decoration:underline}
+.resumo.mini{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.resumo.mini .valor{font-size:1.05rem;margin-top:8px;overflow-wrap:anywhere}
+.adm-opcoes{display:grid;gap:12px;margin-top:12px}
+.campo textarea{background:var(--fundo);border:2px solid var(--linha-lateral);border-radius:10px;color:var(--texto);font:inherit;padding:10px 12px;resize:vertical}
+.adm-chat{margin-top:14px;min-height:0}
+.adm-chat .chat-msgs{min-height:200px;max-height:40vh}
+.galeria-gifs{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px;margin-top:14px}
+.galeria-gifs figure{background:var(--fundo);border:2px solid var(--linha-lateral);border-radius:12px;padding:8px;text-align:center}
+.galeria-gifs img{width:100%;height:auto;display:block}
+.galeria-gifs figcaption{color:var(--cinza);font-size:.75rem;margin-top:4px}
+
+/* ===== versão compacta (tudo um pouco menor, EXCETO a barra lateral) ===== */
+html{font-size:88%}
+/* a barra lateral fica do tamanho original do seu CSS: o texto dela usa px para não encolher junto com o resto */
+.sidebar{overflow-y:auto}
+.sidebar li a,.sidebar li button.sair{font-size:13.6px}
+.conteudo{padding:20px 28px;gap:22px}
+.saudacao h1{font-size:1.75rem}.saudacao p{margin-top:6px;font-size:1rem}
+.topo{gap:24px}
+.avatar{width:72px;height:72px;border-width:3px}
+.resumo{gap:20px}
+.card{padding:10px 16px 12px;border-width:2px}.card h2{font-size:1.1rem}
+.valor{margin-top:8px;font-size:1.45rem}
+.grafico{padding:12px 20px 16px;border-width:2px}.grafico h2{font-size:1.25rem}
+.ajuda{padding:16px 20px;border-width:2px}.ajuda h2{font-size:1.4rem}.ajuda p{margin-top:8px}
+.acao{margin-top:10px;gap:18px}
+.botao{padding:9px 40px;font-size:1.15rem;border-width:2px;border-radius:12px}
+.mascote{width:96px}
+.bolsa{padding:14px 20px;border-width:2px}.bolsa-cabecalho h2{font-size:1.3rem}
+.humor{padding:8px 18px;border-width:2px}.humor img{width:72px}
+.barras li{grid-template-columns:110px 1fr 100px}
+.tabela td,.tabela th{padding:7px 6px}
+.destaque{padding:18px 22px;gap:22px;border-width:2px}.destaque h2{font-size:1.45rem}
+.secao-titulo{font-size:1.3rem;margin-bottom:12px}
+.beneficios{gap:18px}.beneficios .card{padding:12px 16px 16px}
+.slot-animacao{min-height:100px}.slot-grande{min-height:190px}.slot-faixa{min-height:80px}.slot-icone{min-height:64px}
+.slot-icone img{height:64px}.slot-faixa img{height:80px}
+.sobre-hero{padding:20px 28px;gap:24px;border-width:2px}
+.sobre-texto h1{font-size:1.9rem}.sobre-texto p{font-size:1rem;margin-top:10px}
+.sobre-mascote{width:150px}
+.sobre-titulo{font-size:1.4rem;margin-bottom:14px}
+.sobre-grid{gap:16px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.sobre-card{padding:14px 16px;border-width:2px}.sobre-card h3{font-size:1.05rem}
+.termos{grid-template-columns:190px minmax(0,1fr);gap:22px}
+.indice{padding:12px 16px;border-width:2px}
+.texto-termos{padding:12px 22px 16px}
+.clausula{padding:14px 0}.clausula h2{font-size:1.1rem}
+.chat{min-height:420px;border-width:2px}
+.chat-topo{padding:10px 16px}.chat-oink{width:48px;height:48px}
+.chat-msgs{padding:14px;max-height:52vh}
+.chat-form{padding:10px 16px}
+.perfil{grid-template-columns:120px minmax(0,1fr);gap:22px}
+.avatar.grande{width:112px;height:112px}
+dialog.dialogo{width:min(380px,92vw);padding:20px;border-width:2px}
+.dialogo img.dialogo-oink{width:110px}
+.auth-marca{padding:32px;gap:16px}.auth-marca .logo-horizontal{width:min(240px,80%)}.auth-marca .oink-grande{width:min(190px,60%)}
+.auth-marca h2{font-size:1.25rem}
+.auth-cartao{padding:22px}.auth-cartao h1{font-size:1.6rem}
+@media (max-width:900px){.resumo{gap:12px}.perfil{grid-template-columns:1fr}.termos{grid-template-columns:1fr}}
+
+
+/* ===== barra de rolagem e detalhes na cor do site ===== */
+:root{accent-color:var(--roxo)}
+/* tema escuro só nos campos (NÃO na página toda: isso deixava o widget da bolsa com fundo branco) */
+input,select,textarea,dialog{color-scheme:dark}
+.tradingview-widget-container iframe{color-scheme:normal}
+*{scrollbar-width:thin;scrollbar-color:var(--linha) var(--fundo)}
+.sidebar{scrollbar-color:var(--linha) var(--lateral)}
+.chat-msgs{scrollbar-color:var(--linha) var(--card)}
+@supports not (scrollbar-color:auto){
+  ::-webkit-scrollbar{width:12px;height:12px}
+  ::-webkit-scrollbar-track{background:var(--fundo)}
+  ::-webkit-scrollbar-thumb{background:var(--linha);border:3px solid var(--fundo);border-radius:999px}
+  ::-webkit-scrollbar-thumb:hover{background:var(--roxo)}
+  .sidebar::-webkit-scrollbar-track{background:var(--lateral)}
+  .sidebar::-webkit-scrollbar-thumb{border-color:var(--lateral)}
+}
+::selection{background:var(--roxo);color:var(--texto)}
+
+
+/* Mascote Oink como ponteiro */
+html,
+body,
+a,
+button,
+input,
+textarea,
+select,
+[role="button"] {
+    cursor: url("../img/oink-logo/cursor-oink.png") 16 16, auto;
+}

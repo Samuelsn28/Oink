@@ -1,0 +1,39 @@
+{% load static %}<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oink | Entrar</title>
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/extra.css' %}">
+</head>
+<body class="auth">
+<div class="auth-pagina">
+    <section class="auth-marca" aria-label="Apresentação do Oink">
+        <img class="logo-horizontal" src="{% static 'img/oink-logo/oink-horizontal-1080.png' %}" alt="Oink">
+        <img class="oink-grande" src="{% static 'img/oink-gifs/oink-acenando.gif' %}" alt="">
+        <h2>Seu dinheiro está em boas patas</h2>
+        <ul><li>Entenda para onde vai o seu dinheiro</li><li>Descubra gastos que dá pra cortar</li><li>Tire dúvidas com o Oink IA</li></ul>
+    </section>
+    <main class="auth-lado">
+        <div class="auth-cartao">
+            <img class="logo-horizontal-mobile" src="{% static 'img/oink-logo/oink-horizontal-1080.png' %}" alt="Oink">
+            {% if messages %}<ul class="mensagens auth-msgs">{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>{% endif %}
+            <h1>Entrar</h1>
+            <p class="sub">Que bom te ver de novo!</p>
+            <form method="post" class="form">{% csrf_token %}
+                {% for campo in form %}{% if campo.name != 'aceito' %}<label class="campo">{{ campo.label }}{{ campo }}{% for e in campo.errors %}<span class="erro">{{ e }}</span>{% endfor %}</label>{% endif %}{% endfor %}
+                {% for e in form.non_field_errors %}<p class="erro">{{ e }}</p>{% endfor %}
+                <button class="botao" type="submit">Entrar</button>
+            </form>
+            <p class="auth-troca">Ainda não tem conta? <a class="link" href="{% url 'cadastro' %}">Criar conta</a></p>
+        </div>
+    </main>
+</div>
+<script src="{% static 'javascript/conta.js' %}" defer></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{% load static %}<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oink | Termos de uso</title>
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/extra.css' %}">
+</head>
+<body class="auth">
+<div class="auth-pagina">
+    <section class="auth-marca" aria-label="Apresentação do Oink">
+        <img class="logo-horizontal" src="{% static 'img/oink-logo/oink-horizontal-1080.png' %}" alt="Oink">
+        <img class="oink-grande" src="{% static 'img/oink-gifs/oink-pensando.gif' %}" alt="">
+        <h2>Antes de começar, um combinado</h2>
+        <ul><li>Entenda para onde vai o seu dinheiro</li><li>Descubra gastos que dá pra cortar</li><li>Tire dúvidas com o Oink IA</li></ul>
+    </section>
+    <main class="auth-lado">
+        <div class="auth-cartao">
+            <img class="logo-horizontal-mobile" src="{% static 'img/oink-logo/oink-horizontal-1080.png' %}" alt="Oink">
+            {% if messages %}<ul class="mensagens auth-msgs">{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>{% endif %}
+            <h1>Antes de continuar</h1>
+            <p class="sub">Para usar o Oink, você precisa concordar com os Termos de uso.</p>
+            <ul class="mensagens">
+                <li>As respostas da IA são educativas e não substituem um profissional.</li>
+                <li>Seus dados financeiros são usados só para o serviço funcionar.</li>
+                <li>Você cuida da sua senha e informa dados verdadeiros.</li>
+            </ul>
+            <p><a class="link" href="{% url 'termos' %}" target="_blank" rel="noopener">Ler os termos completos</a></p>
+            <form method="post" class="form">{% csrf_token %}
+                <label class="aceite"><input type="checkbox" name="aceito" id="id_aceito" required>
+                    <span>Li e concordo com <b>todos</b> os Termos de uso.</span></label>
+                <button class="botao" type="submit">Aceitar e continuar</button>
+            </form>
+            <form method="post" action="{% url 'logout' %}" class="form">{% csrf_token %}
+                <button class="botao sec" type="submit">Não aceito, sair</button>
+            </form>
+        </div>
+    </main>
+</div>
+<script src="{% static 'javascript/conta.js' %}" defer></script>
+</body>
+</html>

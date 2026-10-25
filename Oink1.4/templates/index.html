@@ -1,0 +1,290 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Oink | Dashboard</title>
+
+    <!-- A fonte do site -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+
+    
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/extra.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+</head>
+
+<body>
+
+ <!-- A barra lateral do site, com o logo e o menu de navegação, que vai ser fixo na tela, para o usuário poder acessar a qualquer momento -->
+    <aside class="sidebar">
+
+        <a class="logo" href="{% url 'index' %}">
+            <img
+                class="logo-icone"
+                src="{% static 'img/oink-logo/oink-logo.png' %}"
+                alt="Logo do Oink"
+            >
+
+            <img
+                class="logo-escrita"
+                src="{% static 'img/oink-escrita/oink-escrita-roxo.png' %}"
+                alt="Oink"
+            >
+        </a>
+
+          <nav aria-label="Menu principal">
+            <ul>
+                <li><a href="{% url 'chat' %}"><span class="icone" aria-hidden="true"></span>Converse com o Oink</a></li>
+                <li><a href="{% url 'configuracoes' %}"><span class="icone" aria-hidden="true"></span>Configurações</a></li>
+                <li><a href="{% url 'perfil' %}"><span class="icone" aria-hidden="true"></span>Minha conta</a></li>
+                <li><a href="{% url 'sobre' %}"><span class="icone" aria-hidden="true"></span>Sobre nós</a></li>
+                <li><a href="{% url 'pq_usar' %}"><span class="icone" aria-hidden="true"></span>Pq usar o Oink?</a></li>
+                <li><a href="{% url 'termos' %}"><span class="icone" aria-hidden="true"></span>Termos de uso</a></li>
+            {% if user.is_staff %}<li><a href="{% url 'adm_oink' %}"><span class="icone" aria-hidden="true"></span>Admin Oink</a></li>{% endif %}
+                {% if user.is_authenticated %}
+                <li><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit" class="sair" data-sair data-sair><span class="icone" aria-hidden="true"></span>Sair</button></form></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </aside>
+
+
+<!-- As coisas principais do site, o que o usuário vai ver primeiro, o que ele vai interagir,, mas primeiroo, ele so vai poder usar o site se tiber logadooo -->
+    <main class="conteudo">
+
+<!-- Topo, o matheus que sabe fazer essas macumbas com o django, para colocar foto e o nome do user -->
+        <header class="topo">
+
+            <section class="saudacao">
+                <h1>Olá, {{ nome }}</h1>
+
+                <p>
+                    Veja como estão suas finanças hoje
+                </p>
+            </section>
+
+            <figure class="avatar">
+                <a href="{% url 'perfil' %}" aria-label="Editar meu perfil">
+                    {% if foto_url %}<img src="{{ foto_url }}" alt="Sua foto de perfil">{% else %}<img src="{% static 'img/oink-logo/icone-user-sem-foto.png' %}" alt="Foto de perfil">{% endif %}
+                </a>
+            </figure>
+
+        </header>
+
+
+   <!-- Seu resumo que descobrimos, se der errado é culpa do pedro -->
+        <section
+            class="resumo"
+            aria-label="Resumo financeiro"
+        >
+
+            <article class="card">
+
+                <h2>Saldo</h2>
+
+                <p class="valor{% if saldo < 0 %} gasto{% endif %}">R$ {{ saldo|floatformat:2 }}</p>
+
+            </article>
+
+
+            <article class="card">
+
+                <h2>Entrada</h2>
+
+                <p class="valor">R$ {{ ganhos|floatformat:2 }}</p>
+
+            </article>
+
+
+            <article class="card">
+
+                <h2>Gastos</h2>
+
+                <p class="valor gasto">R$ {{ gastos|floatformat:2 }}</p>
+                {% if meta %}<p class="legenda">Meta: R$ {{ meta|floatformat:2 }} · {{ meta_pct }}% usado</p>{% endif %}
+
+            </article>
+
+        </section>
+
+
+        <!-- O Oink reage ao seu mês -->
+        <section class="humor" aria-label="Como está o seu mês">
+            <img src="{% static 'img/oink-gifs/oink-'|add:humor|add:'.gif' %}" alt="">
+            <p>{{ frase_oink }}</p>
+        </section>
+
+     
+        <!-- O grafico de gastos my niggas -->
+        <section
+            class="grafico"
+            aria-label="Gráfico de gastos"
+        >
+
+            <h2>Gráficos de gastos</h2>
+            <p class="legenda">Gastos de {{ mes_nome }} por categoria</p>
+            {% if categorias %}
+            <ul class="barras">
+                {% for c in categorias %}
+                <li>
+                    <span class="barra-nome">{{ c.nome }}</span>
+                    <span class="barra-trilho" role="img" aria-label="{{ c.nome }}: {{ c.pct }}% dos gastos"><span class="barra-cheia" style="width: {{ c.pct }}%"></span></span>
+                    <span class="barra-valor">R$ {{ c.valor|floatformat:2 }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}<p class="vazio">Nenhum gasto registrado neste mês.</p>{% endif %}
+        </section>
+
+        <section class="grafico" aria-label="Nova movimentação">
+            <h2>Nova movimentação</h2>
+            <form method="post" class="form grade">
+                {% csrf_token %}
+                {% for campo in form %}<label class="campo">{{ campo.label }}{{ campo }}{% for e in campo.errors %}<span class="erro">{{ e }}</span>{% endfor %}</label>{% endfor %}
+                <button class="botao" type="submit">Adicionar</button>
+            </form>
+        </section>
+
+        <section class="grafico" aria-label="Últimas movimentações">
+            <h2>Últimas movimentações</h2>
+            {% if ultimas %}
+            <table class="tabela">
+                <thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Valor</th><th><span class="so-leitor">Ações</span></th></tr></thead>
+                <tbody>
+                {% for t in ultimas %}
+                <tr>
+                    <td>{{ t.data|date:"d/m/Y" }}</td><td>{{ t.descricao }}</td><td>{{ t.get_categoria_display }}</td>
+                    <td class="{% if t.tipo == 'gasto' %}neg{% else %}pos{% endif %}">{% if t.tipo == 'gasto' %}-{% endif %}R$ {{ t.valor|floatformat:2 }}</td>
+                    <td><form method="post" action="{% url 'excluir' t.pk %}">{% csrf_token %}<button type="submit" class="excluir" aria-label="Excluir {{ t.descricao }}">Excluir</button></form></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% else %}<p class="vazio">Nada por aqui ainda. Registre seu primeiro ganho ou gasto acima.</p>{% endif %}
+            </section>
+
+
+         <!-- Botão de ajuda com a IA my niggas -->
+        <section
+            class="ajuda"
+            aria-label="Chat com a IA"
+        >
+
+            <h2>
+                Precisa de ajuda?
+            </h2>
+
+            <p>
+                Acesse a sua IA financeira, o Oink IA,
+                seu dinheiro está em boas patas.
+            </p>
+
+            <p class="piada">
+                Ou cascos.
+            </p>
+
+            <section class="acao">
+
+                <a
+                    class="botao"
+                    href="{% url 'chat' %}"
+                >
+                    Oink
+                </a>
+
+                <figure class="mascote">
+
+                    <img
+                        src="{% static 'img/oink-gifs/oink-acenando.gif' %}"
+                        alt="Oink acenando"
+                    >
+
+                </figure>
+
+            </section>
+
+        </section>
+
+
+     <!-- A bolsa de valores my niggas -->
+      <footer class="bolsa" aria-label="Bolsa de valores">
+
+    <div class="bolsa-cabecalho">
+        <div>
+            <h2>Bolsa de valores</h2>
+            <p>Acompanhe o mercado financeiro</p>
+        </div>
+    </div>
+
+    <div class="tradingview-wrapper">
+
+        <!-- TradingView Widget -->
+        <div class="tradingview-widget-container">
+
+            <div class="tradingview-widget-container__widget"></div>
+
+            <script
+                type="text/javascript"
+                src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js"
+                async>
+                {
+                    "symbols": [
+                        {
+                            "proName": "BMFBOVESPA:IBOV",
+                            "title": "Ibovespa"
+                        },
+                        {
+                            "proName": "FX_IDC:USDBRL",
+                            "title": "Dólar"
+                        },
+                        {
+                            "proName": "FX_IDC:EURBRL",
+                            "title": "Euro"
+                        },
+                        {
+                            "proName": "BMFBOVESPA:PETR4",
+                            "title": "Petrobras"
+                        },
+                        {
+                            "proName": "BMFBOVESPA:VALE3",
+                            "title": "Vale"
+                        },
+                        {
+                            "proName": "BINANCE:BTCUSD",
+                            "title": "Bitcoin"
+                        }
+                    ],
+
+                    "colorTheme": "dark",
+
+                    "locale": "br",
+
+                    "largeChartUrl": "",
+
+                    "isTransparent": true,
+
+                    "showSymbolLogo": true,
+
+                    "displayMode": "adaptive"
+                }
+            </script>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+    </main>
+
+{% include "_dialogos.html" %}
+{% include "_dialogos.html" %}
+</body>
+</html>

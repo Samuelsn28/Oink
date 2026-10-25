@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Oink | Sobre nós</title>
+
+    <!-- A fonte do site -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/sobre.css' %}">
+    <link rel="stylesheet" href="{% static 'css/extra.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+</head>
+
+<body>
+
+    <!-- A barra lateral, igual a da página inicial -->
+    <aside class="sidebar">
+
+        <a class="logo" href="{% url 'index' %}">
+            <img
+                class="logo-icone"
+                src="{% static 'img/oink-logo/oink-logo.png' %}"
+                alt="Logo do Oink"
+            >
+
+            <img
+                class="logo-escrita"
+                src="{% static 'img/oink-escrita/oink-escrita-roxo.png' %}"
+                alt="Oink"
+            >
+        </a>
+
+        <nav aria-label="Menu principal">
+            <ul>
+                <li><a href="{% url 'chat' %}"><span class="icone" aria-hidden="true"></span>Converse com o Oink</a></li>
+                <li><a href="{% url 'configuracoes' %}"><span class="icone" aria-hidden="true"></span>Configurações</a></li>
+                <li><a href="{% url 'perfil' %}"><span class="icone" aria-hidden="true"></span>Minha conta</a></li>
+                <li><a class="ativo" aria-current="page" href="{% url 'sobre' %}"><span class="icone" aria-hidden="true"></span>Sobre nós</a></li>
+                <li><a href="{% url 'pq_usar' %}"><span class="icone" aria-hidden="true"></span>Pq usar o Oink?</a></li>
+                <li><a href="{% url 'termos' %}"><span class="icone" aria-hidden="true"></span>Termos de uso</a></li>
+            {% if user.is_staff %}<li><a href="{% url 'adm_oink' %}"><span class="icone" aria-hidden="true"></span>Admin Oink</a></li>{% endif %}
+                {% if user.is_authenticated %}
+                <li><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit" class="sair" data-sair><span class="icone" aria-hidden="true"></span>Sair</button></form></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="conteudo">
+
+        <!-- Topo -->
+        <header class="topo">
+            <section class="saudacao">
+                <h1>Sobre nós</h1>
+                <p>Conheça o Oink e quem está por trás dele</p>
+            </section>
+        </header>
+
+        <!-- Apresentação, o espaço da direita é para a animação do mascote -->
+        <section class="destaque" aria-label="Apresentação do Oink" data-reveal>
+            <article>
+                <h2>Oi, eu sou o Oink!</h2>
+                <p>
+                    Somos um projeto que usa inteligência artificial para ajudar você
+                    a entender e controlar o seu dinheiro, sem complicação.
+                </p>
+                <p>
+                    Nossa missão é tornar a educação financeira acessível para todo mundo.
+                </p>
+            </article>
+
+            <figure class="slot-animacao slot-grande" data-animacao="sobre-mascote" aria-label="Animação do mascote Oink">
+              <figcaption>
+                           <img class="mascote" src="{% static 'img/oink-gifs/oink-entrada.gif' %}" alt="Mascote do Oink" style="height: 250px; width: 250px;">
+              </figcaption>
+            </figure>
+        </section>
+
+        <!-- Como o Oink ajuda -->
+        <section aria-label="Como o Oink ajuda">
+
+            <h2 class="secao-titulo" data-reveal>Como o Oink ajuda</h2>
+
+            <section class="beneficios">
+
+                <article class="card" data-reveal>
+                    <figure class="slot-animacao slot-icone" data-animacao="sobre-card-1" aria-label="Animação: analisar gastos"><img src="{% static 'img/oink-gifs/oink-pensando.gif' %}" alt=""></figure>
+                    <h2>Analisa seus gastos</h2>
+                    <p>Mostra para onde seu dinheiro está indo e o que pode ser cortado.</p>
+                </article>
+
+                <article class="card" data-reveal>
+                    <figure class="slot-animacao slot-icone" data-animacao="sobre-card-2" aria-label="Animação: investir"><img src="{% static 'img/oink-gifs/oink-ideia.gif' %}" alt=""></figure>
+                    <h2>Ajuda a investir</h2>
+                    <p>Sugere o que fazer com o que sobra no fim do mês.</p>
+                </article>
+
+                <article class="card" data-reveal>
+                    <figure class="slot-animacao slot-icone" data-animacao="sobre-card-3" aria-label="Animação: aprender"><img src="{% static 'img/oink-gifs/oink-feliz.gif' %}" alt=""></figure>
+                    <h2>Ensina finanças</h2>
+                    <p>Explica conceitos de educação financeira conversando com você.</p>
+                </article>
+
+            </section>
+        </section>
+
+        <!-- Quem faz o Oink -->
+        <section class="grafico equipe" aria-label="Quem faz o Oink" data-reveal>
+            <h2>Quem faz o Oink</h2>
+            <p>Um projeto da EMAT, feito por estudantes com Python e Django.</p>
+
+            <figure class="slot-animacao slot-faixa" data-animacao="sobre-equipe" aria-label="Animação da equipe"><img src="{% static 'img/oink-gifs/oink-comemorando.gif' %}" alt=""></figure>
+        </section>
+
+        <!-- Chamada final, mesmo estilo do bloco de ajuda da página inicial -->
+        <section class="ajuda" aria-label="Chat com a IA" data-reveal>
+
+            <h2>Precisa de ajuda?</h2>
+
+            <p>Acesse a sua IA financeira, o Oink IA, seu dinheiro está em boas patas.</p>
+
+            <section class="acao">
+                <a class="botao" href="{% url 'chat' %}">Oink</a>
+
+                <figure class="slot-animacao mascote" data-animacao="sobre-final" aria-label="Animação do Oink"><img src="{% static 'img/oink-gifs/oink-acenando.gif' %}" alt=""></figure>
+            </section>
+
+        </section>
+    </main>
+
+    <script src="{% static 'javascript/sobre.js' %}"></script>
+{% include "_dialogos.html" %}
+</body>
+</html>

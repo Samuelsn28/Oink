@@ -1,0 +1,18 @@
+{% load static %}
+    <aside class="sidebar">
+        <a class="logo" href="{% url 'index' %}">
+            <img class="logo-icone" src="{% static 'img/oink-logo/oink-logo.png' %}" alt="Logo do Oink">
+            <img class="logo-escrita" src="{% static 'img/oink-escrita/oink-escrita-roxo.png' %}" alt="Oink">
+        </a>
+        <nav aria-label="Menu principal">
+            <ul>
+                <li><a {% if ativo == 'chat' %}class="ativo" aria-current="page" {% endif %}href="{% url 'chat' %}"><span class="icone" aria-hidden="true"></span>Converse com o Oink</a></li>
+                <li><a {% if ativo == 'senha' %}class="ativo" aria-current="page" {% endif %}href="{% url 'alterar_senha' %}"><span class="icone" aria-hidden="true"></span>Configurações</a></li>
+                <li><a {% if ativo == 'perfil' %}class="ativo" aria-current="page" {% endif %}href="{% url 'perfil' %}"><span class="icone" aria-hidden="true"></span>Minha conta</a></li>
+                <li><a href="{% url 'sobre' %}"><span class="icone" aria-hidden="true"></span>Sobre nós</a></li>
+                <li><a href="{% url 'pq_usar' %}"><span class="icone" aria-hidden="true"></span>Pq usar o Oink?</a></li>
+                <li><a href="{% url 'termos' %}"><span class="icone" aria-hidden="true"></span>Termos de uso</a></li>
+                <li><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit" class="sair" data-sair><span class="icone" aria-hidden="true"></span>Sair</button></form></li>
+            </ul>
+        </nav>
+    </aside>

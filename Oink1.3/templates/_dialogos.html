@@ -1,0 +1,14 @@
+{% load static %}{% if user.is_authenticated %}
+<dialog id="dlg-sair" class="dialogo" aria-labelledby="t-sair">
+    <img class="dialogo-oink" data-src="{% static 'img/oink-gifs/oink-triste.gif' %}" src="{% static 'img/oink-gifs/oink-triste.gif' %}" alt="Oink triste">
+    <h2 id="t-sair">Já vai embora?</h2>
+    <p>O Oink vai ficar com saudade… Tem certeza de que quer sair da sua conta?</p>
+    <form method="post" action="{% url 'logout' %}">{% csrf_token %}
+        <div class="dialogo-botoes">
+            <button type="button" class="botao sec" data-fechar>Ficar</button>
+            <button type="submit" class="botao perigo">Sair</button>
+        </div>
+    </form>
+</dialog>
+<script src="{% static 'javascript/conta.js' %}" defer></script>
+{% endif %}

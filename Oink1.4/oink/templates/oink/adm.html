@@ -1,0 +1,108 @@
+{% load static %}<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oink | Admin Oink</title>
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/extra.css' %}">
+</head>
+<body>
+<meta name="csrf-token" content="{{ csrf_token }}">
+{% include "_sidebar.html" with ativo="adm" %}
+    <main class="conteudo">
+        <header class="topo"><section class="saudacao"><h1>Admin Oink</h1><p>Tudo liberado para testar</p></section></header>
+
+        <section class="resumo mini" aria-label="Status">
+            <article class="card"><h2>Chave Gemini</h2><p class="valor {% if not chave_ok %}gasto{% endif %}">{% if chave_ok %}configurada{% else %}ausente{% endif %}</p></article>
+            <article class="card"><h2>Modelo em uso</h2><p class="valor">{{ modelo }}</p></article>
+            <article class="card"><h2>E-mail</h2><p class="valor">{{ email_modo }}</p></article>
+            <article class="card"><h2>Termos</h2><p class="valor">v{{ termos_versao }}</p></article>
+            <article class="card"><h2>Usuários</h2><p class="valor">{{ usuarios }}</p></article>
+        </section>
+
+        <section class="grafico" aria-label="Chat de teste">
+            <h2>Chat de teste</h2>
+            <p class="legenda">Sem limites e sem histórico guardado. Erros reais da IA aparecem aqui.</p>
+            <div class="adm-opcoes">
+                <label class="aceite"><input type="checkbox" id="adm-cpf" checked><span>Bloquear CPF (desmarque para testar sem o bloqueio)</span></label>
+                <label class="campo">Dados financeiros simulados (vão como contexto para a IA)
+                    <textarea id="adm-ctx" rows="3" placeholder="Ex.: Ganhos: R$ 2000,00. Gastos: R$ 2300,00. Gastos por categoria: Lazer R$ 900,00"></textarea></label>
+            </div>
+            <div class="chat adm-chat">
+                <div class="chat-msgs" id="adm-msgs" aria-live="polite"></div>
+                <form class="chat-form" id="adm-form" autocomplete="off">
+                    <textarea id="adm-in" rows="1" maxlength="1000" placeholder="Mensagem de teste" aria-label="Mensagem de teste"></textarea>
+                    <button class="botao" type="submit">Enviar</button>
+                </form>
+            </div>
+            <button type="button" class="botao sec pequeno" id="adm-limpar" style="margin-top:12px">Limpar conversa</button>
+        </section>
+
+        <section class="grafico" aria-label="Detector de CPF">
+            <h2>Detector de CPF</h2>
+            <label class="campo" style="margin-top:12px">Digite qualquer texto<input id="cpf-txt" placeholder="Ex.: meu cpf é 529.982.247-25"></label>
+            <p class="legenda" id="cpf-res">—</p>
+        </section>
+
+        <section class="grafico" aria-label="E-mail de teste">
+            <h2>E-mail de teste</h2>
+            <p class="legenda">Envia um e-mail para {{ request.user.email|default:"(seu usuário não tem e-mail cadastrado)" }}.</p>
+            <button type="button" class="botao pequeno" id="email-btn" style="margin-top:12px">Enviar e-mail de teste</button>
+            <p class="legenda" id="email-res"></p>
+        </section>
+
+        <section class="grafico" aria-label="Galeria do Oink">
+            <h2>Galeria do Oink</h2>
+            <div class="galeria-gifs">
+                {% for g in gifs %}<figure><img loading="lazy" src="{% static 'img/oink-gifs/oink-'|add:g|add:'.gif' %}" alt="Oink {{ g }}"><figcaption>{{ g }}</figcaption></figure>{% endfor %}
+            </div>
+        </section>
+
+        <section class="grafico" aria-label="Atalhos">
+            <h2>Atalhos</h2>
+            <p class="legenda"><a class="link-sub" href="/admin/">Administração do Django (usuários, movimentações)</a> · <a class="link-sub" href="{% url 'index' %}">Painel normal</a></p>
+        </section>
+    </main>
+<script>
+const $ = (id) => document.getElementById(id);
+const csrf = document.querySelector('meta[name="csrf-token"]').content;
+async function post(url, corpo) {
+  const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json", "X-CSRFToken": csrf }, body: JSON.stringify(corpo) });
+  return { ok: r.ok, d: await r.json().catch(() => ({})) };
+}
+let hist = [];
+function add(q, t, c = "") {
+  const d = document.createElement("div"); d.className = "msg " + q + " " + c; d.textContent = t;
+  $("adm-msgs").appendChild(d); $("adm-msgs").scrollTop = $("adm-msgs").scrollHeight; return d;
+}
+$("adm-form").addEventListener("submit", async (e) => {
+  e.preventDefault(); const t = $("adm-in").value.trim(); if (!t) return;
+  $("adm-in").value = ""; add("eu", t); hist.push({ role: "user", content: t });
+  const esp = add("oink", "…");
+  const { ok, d } = await post("/api/adm/chat/", { historico: hist, bloquear_cpf: $("adm-cpf").checked, contexto: $("adm-ctx").value });
+  esp.remove();
+  if (d.bloqueado) { hist.pop(); add("oink", d.resposta, "bloq"); }
+  else if (ok) { hist.push({ role: "assistant", content: d.resposta }); add("oink", d.resposta); }
+  else { hist.pop(); add("oink", d.erro || "Erro desconhecido.", "erro"); }
+});
+$("adm-in").addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("adm-form").requestSubmit(); } });
+$("adm-limpar").addEventListener("click", () => { hist = []; $("adm-msgs").innerHTML = ""; });
+let tmr; $("cpf-txt").addEventListener("input", () => {
+  clearTimeout(tmr); tmr = setTimeout(async () => {
+    const t = $("cpf-txt").value; if (!t) { $("cpf-res").textContent = "—"; return; }
+    const { d } = await post("/api/adm/cpf/", { texto: t });
+    $("cpf-res").textContent = d.bloqueia ? "🚫 Seria BLOQUEADO (parece um CPF)" : "✅ Passaria normalmente";
+  }, 250);
+});
+$("email-btn").addEventListener("click", async () => {
+  $("email-res").textContent = "Enviando…"; const { d } = await post("/api/adm/email/", {}); $("email-res").textContent = d.mensagem || d.erro || "Erro.";
+});
+</script>
+{% include "_dialogos.html" %}
+</body>
+</html>
